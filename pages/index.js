@@ -44,9 +44,9 @@ export default function PaginaInicial() {
         <>
             <Box
                 styleSheet={{
-                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    backgroundColor: appConfig.theme.colors.primary[500],
-                    backgroundImage: 'url(https://virtualbackgrounds.site/wp-content/uploads/2020/08/the-matrix-digital-rain.jpg)',
+                    display: 'flex', alignItems: 'center', justifyContent: 'right',
+                    //backgroundColor: appConfig.theme.colors.primary[500],
+                    backgroundImage: 'url(https://virtualbackgrounds.site/wp-content/uploads/2020/09/nirvana-nevermind-album-cover-1536x864.jpg)',
                     backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundBlendMode: 'multiply',
                 }}
             >
