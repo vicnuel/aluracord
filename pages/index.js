@@ -140,7 +140,7 @@ export default function PaginaInicial() {
                                 borderRadius: '50%',
                                 marginBottom: '16px',
                             }}
-                            src={`https://github.com/${username}.png`}
+                            src={`https://github.com/${username}.png` || null}
                         />
                         <Text
                             variant="body4"
