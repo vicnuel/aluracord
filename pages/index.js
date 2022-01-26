@@ -44,9 +44,9 @@ export default function PaginaInicial() {
         <>
             <Box
                 styleSheet={{
-                    display: 'flex', alignItems: 'center', justifyContent: 'right',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
                     //backgroundColor: appConfig.theme.colors.primary[500],
-                    backgroundImage: 'url(https://virtualbackgrounds.site/wp-content/uploads/2020/09/nirvana-nevermind-album-cover-1536x864.jpg)',
+                    backgroundImage: 'url(https://virtualbackgrounds.site/wp-content/uploads/2020/07/this-is-fine.jpeg)',
                     backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundBlendMode: 'multiply',
                 }}
             >

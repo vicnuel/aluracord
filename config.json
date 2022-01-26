@@ -1,5 +1,5 @@
 {
-    "name": "Aluracord - Nirvana",
+    "name": "Aluracord - This is fine",
     "theme": {
       "colors": {
         "primary": {
@@ -8,7 +8,7 @@
           "200": "#A3D9A5",
           "300": "#7BC47F",
           "400": "#57AE5B",
-          "500": "#1E90FF",
+          "500": "#FF8C00",
           "600": "#2F8132",
           "700": "#207227",
           "800": "#0E5814",
