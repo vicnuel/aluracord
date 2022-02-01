@@ -40,7 +40,9 @@ export default function PaginaInicial() {
     const [username, setUsername] = React.useState('')
 
     const userAnonymous = "https://png.pngtree.com/png-clipart/20200701/original/pngtree-hacker-coding-with-a-keyboard-and-a-binary-background-color-illustration-png-image_5426760.jpg"
+
     const router = useRouter()
+
     return (
         <>
             <Box
@@ -152,7 +154,7 @@ export default function PaginaInicial() {
                                 borderRadius: '1000px'
                             }}
                         >
-                            {username.length > 0 ? username : "Anónimo"}
+                            {username.length > 0 ? username : "Anônimo"}
                         </Text>
                     </Box>
                     {/* Photo Area */}
