@@ -27,6 +27,7 @@ export default function ChatPage() {
     const [messageList, setMessageList] = React.useState([])
 
     const [loading, setLoading] = React.useState(true)
+
     React.useEffect(() => {
         setLoading(true)
         supabaseClient.from('messages').select('*').order('id', { ascending: false })
@@ -237,6 +238,7 @@ function Header() {
 
 function MessageList(props) {
     //console.log('MessageList', props)
+    const userAnonymous = "https://png.pngtree.com/png-clipart/20200701/original/pngtree-hacker-coding-with-a-keyboard-and-a-binary-background-color-illustration-png-image_5426760.jpg"
 
     return (
         <Box
@@ -278,10 +280,10 @@ function MessageList(props) {
                                         display: 'inline-block',
                                         marginRight: '8px',
                                     }}
-                                    src={`https://github.com/${message.of}.png`}
+                                    src={message.of ? `https://github.com/${message.of}.png` : userAnonymous}
                                 />
                                 <Text tag="strong">
-                                    {message.of}
+                                    {message.of ? message.of : "Anônimo"}
                                 </Text>
                                 <Text
                                     styleSheet={{
