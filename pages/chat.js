@@ -1,17 +1,28 @@
 import { Box, Text, TextField, Image, Button } from '@skynexui/components'
-import React from 'react';
+import React from 'react'
+import { useRouter } from 'next/router'
 import appConfig from '../config.json';
 import { createClient } from '@supabase/supabase-js'
 import ClimbingBoxLoader from 'react-spinners/ClimbingBoxLoader'
+
+import { ButtonSendSticker } from '../src/components/ButtonSendSticker'
 
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTY0MzM3ODY2MSwiZXhwIjoxOTU4OTU0NjYxfQ.7anjDYIyHr7cDm9wiRVbTZOt4dholvtk3xQq51UafLQ'
 const SUPABASE_URL = 'https://ptvcpnxgxrjgfyjqqhfp.supabase.co'
 const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
 
-
-//console.log(supabaseData)
+function listenerMessage(addMessage) {
+    return supabaseClient.from('messages')
+        .on('INSERT', (response) => {
+            addMessage(response.new)
+        })
+        .subscribe()
+}
 
 export default function ChatPage() {
+    const router = useRouter()
+    const username = router.query.username
+
     const [message, setMessage] = React.useState('')
     const [messageList, setMessageList] = React.useState([])
 
@@ -23,6 +34,15 @@ export default function ChatPage() {
                 //console.log('Dados', data)
                 setMessageList(data)
             })
+        listenerMessage((newMessage) => {
+            setMessageList((currentValue) => {
+                return [
+                    newMessage,
+                    ...currentValue
+                ]
+            })
+        })
+
         setTimeout(() => {
             setLoading(false)
         }, 3000)
@@ -31,15 +51,15 @@ export default function ChatPage() {
     function handleSendMessage(newMessage) {
         const message = {
             //id: messageList.length + 1,
-            of: 'viclimas',
+            of: username,
             text: newMessage
         }
 
         supabaseClient.from('messages')
             .insert([message])
-            .then(({ data }) => {
+            .then(() => {
                 //console.log("Mensagem", data)
-                setMessageList([data[0], ...messageList])
+                //setMessageList([data[0], ...messageList])
 
             })
 
@@ -143,30 +163,51 @@ export default function ChatPage() {
                                         color: appConfig.theme.colors.neutrals[200],
                                     }}
                                 />
-                                <Button
-                                    type='submit'
-                                    label='Enviar'
+                                <Box
                                     styleSheet={{
-                                        height: '80%',
-                                        border: 0,
-                                        borderRadius: '5px',
+                                        display: 'flex',
+                                        width: 'auto',
+                                        marginRight: '12px'
+
                                     }}
-                                    //iconName='BiSend'
-                                    buttonColors={{
-                                        contrastColor: appConfig.theme.colors.neutrals["000"],
-                                        mainColor: appConfig.theme.colors.primary[500],
-                                        mainColorLight: appConfig.theme.colors.primary[400],
-                                        mainColorStrong: appConfig.theme.colors.primary[600],
-                                    }}
-                                    onClick={(e) => {
-                                        e.preventDefault()
-                                        let newMessage = message
-                                        newMessage = newMessage.trim()
-                                        if (newMessage !== '' && newMessage.length > 0) {
-                                            handleSendMessage(newMessage)
-                                        }
-                                    }}
-                                />
+                                >
+                                    <ButtonSendSticker
+                                        onStickerClick={(sticker) => {
+                                            handleSendMessage(`:sticker: ${sticker}`)
+                                        }}
+                                    />
+
+                                    <Button
+                                        //type='submit'
+                                        //label='Enviar'
+                                        iconName="FaTelegram"
+                                        rounded="none"
+                                        buttonColors={{
+                                            contrastColor: `${appConfig.theme.colors.primary[500]}`,
+                                            mainColor: `${appConfig.theme.colors.neutrals[800]}`,
+                                            mainColorLight: `${appConfig.theme.colors.neutrals[600]}`,
+                                            mainColorStrong: `${appConfig.theme.colors.neutrals[900]}`
+                                        }}
+                                        styleSheet={{
+                                            borderRadius: '50%',
+                                            padding: '0 3px 0 0',
+                                            minWidth: '50px',
+                                            minHeight: '50px',
+                                            fontSize: '20px',
+                                            margin: '0 8px',
+                                            lineHeight: '0',
+                                            display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                        }}
+                                        onClick={(e) => {
+                                            e.preventDefault()
+                                            let newMessage = message
+                                            newMessage = newMessage.trim()
+                                            if (newMessage !== '' && newMessage.length > 0) {
+                                                handleSendMessage(newMessage)
+                                            }
+                                        }}
+                                    />
+                                </Box>
                             </Box>
                         </Box>
                 }
@@ -253,7 +294,16 @@ function MessageList(props) {
                                     {(new Date().toLocaleDateString())}
                                 </Text>
                             </Box>
-                            {message.text}
+                            <Text
+                                styleSheet={{
+                                    fontSize: '14px',
+                                    wordBreak: 'break-word'
+                                }}
+                            >
+                                {message.text.startsWith(':sticker:')
+                                    ? (<Image styleSheet={{ maxWidth: '7rem' }} src={message.text.replace(':sticker:', '')} />)
+                                    : (message.text)}
+                            </Text>
                         </Text>
                     )
                 })
