@@ -39,6 +39,7 @@ function HomePage() {
 export default function PaginaInicial() {
     const [username, setUsername] = React.useState('')
 
+    const userAnonymous = "https://png.pngtree.com/png-clipart/20200701/original/pngtree-hacker-coding-with-a-keyboard-and-a-binary-background-color-illustration-png-image_5426760.jpg"
     const router = useRouter()
     return (
         <>
@@ -140,7 +141,7 @@ export default function PaginaInicial() {
                                 borderRadius: '50%',
                                 marginBottom: '16px',
                             }}
-                            src={`https://github.com/${username}.png` || null}
+                            src={username.length > 0 ? `https://github.com/${username}.png` : userAnonymous}
                         />
                         <Text
                             variant="body4"
@@ -151,7 +152,7 @@ export default function PaginaInicial() {
                                 borderRadius: '1000px'
                             }}
                         >
-                            {username}
+                            {username.length > 0 ? username : "Anónimo"}
                         </Text>
                     </Box>
                     {/* Photo Area */}
