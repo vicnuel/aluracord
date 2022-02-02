@@ -293,7 +293,7 @@ function MessageList(props) {
                                     }}
                                     tag="span"
                                 >
-                                    {(new Date().toLocaleDateString())}
+                                    {message.created_at.replace('T', ' - ')}
                                 </Text>
                             </Box>
                             <Text
